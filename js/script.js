@@ -16,6 +16,15 @@ Date: 12/12/2022
 * This list is updated each quote and cleared when all quotes have been used.
 **/
 const usedQuotes = [];
+
+/*
+* `interval` var
+*  stores the interval that will automatically update the page.
+**/
+let interval= setInterval(() => {
+  updateQuote();
+}, 10000);
+
 /*** 
  * `quotes` array 
  * Contains a list of quote objects, selected from the works of Brandon Sanderson.
@@ -152,26 +161,42 @@ function changeColor(){
 }
 
 
+/***
+ * `resetTimer` function
+ * clear the current interval var, and reset it.
+***/
+function resetTimer(){
+  clearInterval(interval);
+  interval= setInterval(() => {
+    updateQuote();
+  }, 10000);
+}
+
+
 /**
- * `update` function
+ * `updateQuote` function
  * Randomly update the quote and colors.
  **/
-function update(){
+
+function updateQuote(){
   printQuote();
   changeColor();
 }
 
-/**
- * Update the quote and color every 10 seconds.
- */
-setInterval(() => {
-  update();
-}, 10000);
+
+/***
+ * `handleLoadQuoteeBtn` function
+ *  Executes when the load-button is pressed
+ *  resets the automatic update timer and loads a new quote
+***/
+function handleLoadQuoteeBtn(){
+  resetTimer();
+  updateQuote();
+}
 
 
 /***
  * click event listener for the print quote button
  * DO NOT CHANGE THE CODE BELOW!!
 ***/
-
-document.getElementById('load-quote').addEventListener("click", update, false);
+document.getElementById('load-quote').addEventListener("click", handleLoadQuoteeBtn, false);
